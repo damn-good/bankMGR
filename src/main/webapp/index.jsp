@@ -5,12 +5,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="stripes" uri="http://stripes.sourceforge.net/stripes.tld"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <html>
+<!--[if gt IE 8]><!--> 
+<html class="no-js"> <!--<![endif]-->
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -42,7 +43,6 @@
                     <div class="menuextras">
                         <div class="extras">
                             <ul>
-                                
                                 <li>
                                     <div class="dropdown choose-country">
                                         <a class="#" data-toggle="dropdown" href="#"><img src="img/flags/gb.png" alt="Great Britain"> UK</a>
@@ -53,7 +53,7 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li><a href="page-login.html">Login</a></li>
+                                <li><stripes:link beanclass="com.neo.bankmgr.web.action.LoginActionBean">Login</stripes:link></li>
                             </ul>
                         </div>
                     </div>
