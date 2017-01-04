@@ -45,15 +45,15 @@
             <version>1.6.0</version>
         </dependency>
         <dependency>
-            <groupId>com.samaxes.stripes.ejb3</groupId>
-            <artifactId>stripejb3</artifactId>
-            <version>1.0.2</version>
+            <groupId>com.samaxes.stripes</groupId>
+            <artifactId>stripes-injection-enricher</artifactId>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
-            <scope>provided</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
 

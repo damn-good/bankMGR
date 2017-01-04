@@ -15,36 +15,67 @@
  */
 package com.neo.bankmgr.web.action;
 
+import com.neo.bankmgr.domain.Account;
+import com.neo.bankmgr.domain.Signon;
+import com.neo.bankmgr.service.AccountFacade;
+import com.neo.bankmgr.service.MessageFacade;
+import com.neo.bankmgr.service.SignonFacade;
+import com.neo.bankmgr.service.TransfertFacade;
 import java.io.Serializable;
+import javax.ejb.EJB;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.SessionScope;
 import net.sourceforge.stripes.action.SimpleMessage;
 
 /**
  * @author Eduardo Macarron
  *
  */
+@SessionScope
 public abstract class AbstractActionBean implements ActionBean, Serializable {
 
-  private static final long serialVersionUID = -1767714708233127983L;
+    private static final long serialVersionUID = -1767714708233127983L;
 
-  protected static final String ERROR = "/WEB-INF/jsp/common/Error.jsp";
+    protected static final String ERROR = "/WEB-INF/jsp/common/Error.jsp";
 
-  protected transient ActionBeanContext context;
+    protected transient ActionBeanContext context;
 
-  protected void setMessage(String value) {
-    context.getMessages().add(new SimpleMessage(value));
-  }
-  
-  @Override
-  public ActionBeanContext getContext() {
-    return context;
-  }
+    @EJB
+    SignonFacade signonFacade;
+    @EJB
+    AccountFacade accountFacade;
+    @EJB
+    MessageFacade messageFacade;
+    @EJB
+    TransfertFacade transfertFacade;
 
-  @Override
-  public void setContext(ActionBeanContext context) {
-    this.context = context;
-  }
+    protected boolean authenticated;
+    protected Account account = new Account();
+    protected Signon signon;
+
+    protected void setMessage(String value) {
+        context.getMessages().add(new SimpleMessage(value));
+    }
+
+    public boolean isAuthenticated() {
+        return authenticated && account != null && account.getUserid() != null;
+    }
+
+    public void clear() {
+        account = new Account();
+        authenticated = false;
+    }
+
+    @Override
+    public ActionBeanContext getContext() {
+        return context;
+    }
+
+    @Override
+    public void setContext(ActionBeanContext context) {
+        this.context = context;
+    }
 
 }

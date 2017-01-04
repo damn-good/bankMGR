@@ -30,10 +30,16 @@ public class SignonFacade extends AbstractFacade<Signon> {
     }
 
     public Signon passwordAuthentication(String userId, String password) {
-        return (Signon) em.createQuery("SELECT s FROM Signon s WHERE s.password = :password AND s.userid = :userId")
+        Signon s = null;
+        try{
+            s=(Signon) em.createQuery("SELECT s FROM Signon s WHERE s.password = :password AND s.userid = :userId")
                 .setParameter("userId", userId)
                 .setParameter("password", password)
                 .getSingleResult();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return s;
     }
     
     

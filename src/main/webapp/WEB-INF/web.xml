@@ -7,6 +7,10 @@
             <param-name>ActionResolver.Packages</param-name>
             <param-value>com.neo.bankmgr.web.action</param-value>
         </init-param>
+        <init-param>
+            <param-name>Extension.Packages</param-name>
+            <param-value>com.samaxes.stripes.inject</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>

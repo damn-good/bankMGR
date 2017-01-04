@@ -160,7 +160,7 @@
 					<div class="col-sm-5">
 						<div class="basic-login">
                                                     <div role="form">
-                                                    <stripes:form  beanclass="com.neo.bankmgr.web,action.LoginActionBean">
+                                                        <stripes:form  beanclass="com.neo.bankmgr.web.action.LoginActionBean">
 								<div class="form-group">
                                                                     <label for="login-username"><i class="icon-user"></i> <b>Username or Email</b></label>
                                                                     <stripes:text name="username" class="form-control" id="login-username"></stripes:text >
@@ -170,28 +170,23 @@
                                                                     <stripes:password name="password" class="form-control" id="login-password"></stripes:password>
 								</div>
 								<div class="form-group">
-									<label class="checkbox">
-										<input type="checkbox"> Remember me
-									</label>
-									<a href="page-password-reset.html" class="forgot-password">Forgot password?</a>
-									<button type="submit" class="btn pull-right">Login</button>
-                                                                <stripes:submit name="login" value="login"></stripes:submit>
-									<div class="clearfix"></div>
+                                                                    <label class="checkbox">
+                                                                        <input type="checkbox"> Remember me
+                                                                    </label>
+                                                                    <a href="page-password-reset.html" class="forgot-password">Forgot password?</a>
+                                                                    <stripes:submit name="connect" value="login" class="btn pull-right"></stripes:submit>
+                                                                    <div class="clearfix"></div>
 								</div>
                                                     </stripes:form>
                                                         </div>
 						</div>
 					</div>
 					<div class="col-sm-7 social-login">
-						<p>Or login with your Facebook or Twitter</p>
-						<div class="social-login-buttons">
-							<a href="#" class="btn-facebook-login">Login with Facebook</a>
-							<a href="#" class="btn-twitter-login">Login with Twitter</a>
+                                                <div class="not-member">
+                                                    <p>Not a member? <stripes:link beanclass="com.neo.bankmgr.web.action.LoginActionBean" event="register-form">Register here</stripes:link></p>
 						</div>
 						<div class="clearfix"></div>
-						<div class="not-member">
-							<p>Not a member? <a href="page-register.html">Register here</a></p>
-						</div>
+						
 					</div>
 				</div>
 			</div>
