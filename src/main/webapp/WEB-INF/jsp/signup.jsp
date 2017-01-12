@@ -59,12 +59,12 @@
                 </div>
                 <nav id="mainmenu" class="mainmenu">
                     <ul>
-                        <li class="logo-wrapper"><a href="index.html"><img src="img/mPurpose-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
+                        <li class="logo-wrapper"><a href="index.jsp"><img src="img/mPurpose-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.jsp">Home</a>
                         </li>
                         <li>
-                            <a href="features.html">Features</a>
+                            <a href="#">Features</a>
                         </li>
                         <li class="has-submenu active">
                             <a href="#">Pages +</a>
@@ -164,56 +164,57 @@
                                     <div class="form-group">
                                         <label for="register-firstname"><i class="icon-user"></i> <b>First name</b></label>
                                         <stripes:text name="account.firstname" class="form-control" id="register-firstname"></stripes:text>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="register-lastname"><i class="icon-user"></i> <b>Surname</b></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="register-lastname"><i class="icon-user"></i> <b>Surname</b></label>
                                         <stripes:text name="account.lastname" class="form-control" id="register-lastname"></stripes:text>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="register-gender"><i class="icon-user"></i> <b>Gender</b></label>
+                                        <stripes:select name="account.gender" class="form-control" id="register-gender">
+                                            <stripes:option value="m">Male</stripes:option>
+                                            <stripes:option value="f">Female</stripes:option>
+                                        </stripes:select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="register-gender"><i class="icon-user"></i> <b>Gender</b></label>
-                                    <stripes:select name="account.gender" class="form-control" id="register-gender">
-                                        <stripes:option value="m">Male</stripes:option>
-                                        <stripes:option value="f">Female</stripes:option>
-                                    </stripes:select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label >
+                                        <label for="register-email">
                                             <b>Email</b>
-                                            <stripes:text name="account.email" class="form-control" id="register-email"></stripes:text>
                                         </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label >
-                                            <b>Phone number</b>
-                                            <stripes:text name="account.phone" class="form-control" id="register-phone"></stripes:text>
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>
-                                            <b>Country</b>
-                                            <stripes:select name="account.country" class="form-control" id="register-country">
+                                        <stripes:text name="account.email" class="form-control" id="register-email"></stripes:text>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="register-phone">
+                                                <b>Phone number</b>
+                                            </label>
+                                        <stripes:text name="account.phone" class="form-control" id="register-phone"></stripes:text>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>
+                                                <b>Country</b>
+                                            <stripes:select name="signon.country" class="form-control" id="register-country">
                                                 <stripes:option value=" ">Choose your country</stripes:option>
-                                                <stripes:options-collection collection="" />
+                                                <stripes:options-collection collection="${actionBean.countries}" label="name" value="id"/>
                                             </stripes:select>
                                         </label>
                                     </div>
                                     <div class="form-group">
                                         <label ><b>ZIP code</b>
                                             <stripes:text name="account.zip" class="form-control" id="register-zip"></stripes:text>
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="register-password"><i class="icon-lock"></i> <b>Password</b></label>
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="register-password"><i class="icon-lock"></i> <b>Password</b></label>
                                         <stripes:password name="signon.password" class="form-control" id="register-password"></stripes:password>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="register-password2"><i class="icon-lock"></i> <b>Re-enter Password</b></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="register-password2"><i class="icon-lock"></i> <b>Re-enter Password</b></label>
                                         <stripes:password name="password" class="form-control" id="register-password2" />
                                     </div>
                                     <div class="form-group">
                                         <stripes:submit name="register" value="Register" class="btn pull-right"></stripes:submit>
-                                        <div class="clearfix"></div>
-                                    </div>
+                                            <div class="clearfix"></div>
+                                        </div>
                                 </stripes:form>
                             </div>
                         </div>

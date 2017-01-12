@@ -18,6 +18,7 @@ package com.neo.bankmgr.web.action;
 import com.neo.bankmgr.domain.Account;
 import com.neo.bankmgr.domain.Signon;
 import com.neo.bankmgr.service.AccountFacade;
+import com.neo.bankmgr.service.CountryFacade;
 import com.neo.bankmgr.service.MessageFacade;
 import com.neo.bankmgr.service.SignonFacade;
 import com.neo.bankmgr.service.TransfertFacade;
@@ -33,7 +34,6 @@ import net.sourceforge.stripes.action.SimpleMessage;
  * @author Eduardo Macarron
  *
  */
-@SessionScope
 public abstract class AbstractActionBean implements ActionBean, Serializable {
 
     private static final long serialVersionUID = -1767714708233127983L;
@@ -42,29 +42,29 @@ public abstract class AbstractActionBean implements ActionBean, Serializable {
 
     protected transient ActionBeanContext context;
 
-    @EJB
-    SignonFacade signonFacade;
+    
     @EJB
     AccountFacade accountFacade;
     @EJB
     MessageFacade messageFacade;
     @EJB
     TransfertFacade transfertFacade;
+    
 
     protected boolean authenticated;
-    protected Account account = new Account();
-    protected Signon signon;
+    private Account account = new Account();
+    private Signon signon = new Signon();
 
     protected void setMessage(String value) {
         context.getMessages().add(new SimpleMessage(value));
     }
 
     public boolean isAuthenticated() {
-        return authenticated && account != null && account.getUserid() != null;
+        return authenticated && getAccount() != null && getAccount().getUserid() != null;
     }
 
     public void clear() {
-        account = new Account();
+        setAccount(new Account());
         authenticated = false;
     }
 
@@ -76,6 +76,34 @@ public abstract class AbstractActionBean implements ActionBean, Serializable {
     @Override
     public void setContext(ActionBeanContext context) {
         this.context = context;
+    }
+
+    /**
+     * @return the account
+     */
+    public Account getAccount() {
+        return account;
+    }
+
+    /**
+     * @param account the account to set
+     */
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    /**
+     * @return the signon
+     */
+    public Signon getSignon() {
+        return signon;
+    }
+
+    /**
+     * @param signon the signon to set
+     */
+    public void setSignon(Signon signon) {
+        this.signon = signon;
     }
 
 }

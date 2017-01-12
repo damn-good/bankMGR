@@ -59,9 +59,9 @@
                     </div>
                     <nav id="mainmenu" class="mainmenu">
                         <ul>
-                            <li class="logo-wrapper"><a href="index.html"><img src="img/mPurpose-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
+                            <li class="logo-wrapper"><a href="#"><img src="img/mPurpose-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a></li>
                             <li class="active">
-                                <a href="index.html">Home</a>
+                                <a href="#">Home</a>
                             </li>
                             <li>
                                 <a href="features.html">Features</a>

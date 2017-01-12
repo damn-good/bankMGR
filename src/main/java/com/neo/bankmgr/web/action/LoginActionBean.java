@@ -5,14 +5,13 @@
  */
 package com.neo.bankmgr.web.action;
 
-import com.neo.bankmgr.domain.Account;
-import com.neo.bankmgr.domain.Signon;
-import com.neo.bankmgr.service.AccountFacade;
+import com.neo.bankmgr.domain.Country;
+import com.neo.bankmgr.service.CountryFacade;
 import com.neo.bankmgr.service.SignonFacade;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -20,7 +19,6 @@ import net.sourceforge.stripes.action.HandlesEvent;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.SessionScope;
-import net.sourceforge.stripes.action.UrlBinding;
 import org.apache.commons.lang.RandomStringUtils;
 
 /**
@@ -30,10 +28,15 @@ import org.apache.commons.lang.RandomStringUtils;
 @SessionScope
 public class LoginActionBean extends AbstractActionBean {
 
+    @EJB
+    CountryFacade countryFacade;
+    @EJB
+    SignonFacade signonFacade;
     private static final String LOGIN_PAGE = "/WEB-INF/jsp/login.jsp";
     private static final String SIGNUP_PAGE = "/WEB-INF/jsp/signup.jsp";
-
-    private String username = "", password = "";
+    private List<Country> countries;
+    private String username = "", password = "",message;
+    
 
     @DefaultHandler
     public Resolution signonForm() {
@@ -54,22 +57,17 @@ public class LoginActionBean extends AbstractActionBean {
 
     @HandlesEvent("connect")
     public Resolution connect() {
-//      Logger.getGlobal().log(Level.INFO, "username=" + getUsername() + "\n password= " + getPassword());
         if (signonFacade == null) {
             Logger.getGlobal().log(Level.INFO, "facade nulle");
         }
-        signon = signonFacade.passwordAuthentication(getUsername(), getPassword());
-        if (signon == null) {
+        setSignon(signonFacade.passwordAuthentication(getUsername(), getPassword()));
+        if (getSignon() == null) {
             String value = "Invalid username or password.  Signon failed.";
             setMessage(value);
             clear();
             return new ForwardResolution(LOGIN_PAGE);
         } else {
-            account = accountFacade.find(signon);
-//            authenticated = true;
-//            HttpSession session = context.getRequest().getSession();
-//            // this bean is already registered as /actions/Account.action
-//            session.setAttribute("accountBean", this);
+            setAccount(accountFacade.find(getSignon()));
             return new RedirectResolution(AccountActionBean.class);
         }
     }
@@ -82,12 +80,25 @@ public class LoginActionBean extends AbstractActionBean {
     @HandlesEvent("register")
     @Transactional
     public Resolution registerNewAccount() {
-        authenticated = false;
-        signon.setUserid(account.getFirstname().charAt(0)+signonFacade.count()+1+""+RandomStringUtils.random(3, 25, 0, false, false, null));
-        signonFacade.create(signon);
-        account.setUserid(signon.getUserid());
-        accountFacade.create(account);
-        return new RedirectResolution(AccountActionBean.class);
+        int count = signonFacade.count();
+        String random = RandomStringUtils.random(3, false, true);
+        if (accountFacade.checkAccount(getAccount())) {
+            getSignon().setUserid(count + 1 + "" + random);
+            signonFacade.create(getSignon());
+            getAccount().setUserid(getSignon().getUserid());
+            getAccount().setBalance(0);
+            getAccount().setStatus((short) 0);
+            getAccount().setIban(RandomStringUtils.random(10, false, true));
+
+            accountFacade.create(getAccount());
+            authenticated = true;
+            message="Successfully registered. You can now connect using this username: "+" and your password";
+            return new RedirectResolution(AccountActionBean.class);
+        }else{
+            message="Email or phone already used on this platform please chose others.";
+            return new RedirectResolution(LoginActionBean.class, "register-form");
+        }
+
     }
 
     public Resolution signoff() {
@@ -122,6 +133,34 @@ public class LoginActionBean extends AbstractActionBean {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the countries
+     */
+    public List<Country> getCountries() {
+        return countryFacade.findAll();
+    }
+
+    /**
+     * @param countries the countries to set
+     */
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

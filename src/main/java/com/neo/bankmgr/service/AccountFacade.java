@@ -50,25 +50,33 @@ public class AccountFacade extends AbstractFacade<Account> {
                 .setParameter("userid", signOn.getUserid())
                 .getSingleResult();
     }
-
-    /**
-     *
-     * @param begin the new account to be created no id needed.
-     * @param password the new account ' s password
-     * @return
-     *
-     */
-    @Transactional
-    public Signon signUp(Account begin, String password) {
-        UUID uuid = Generators.timeBasedGenerator().generate();
-        begin.setUserid(RandomStringUtils.random(3, true, true)+uuid.clockSequence());
-        begin.setIban(begin.getUserid());
-        Signon s= new Signon(begin.getUserid(), password);
-
-        signonFacade.create(s);
-        this.create(begin);
-        return s;
+    
+    public boolean checkAccount(Account a){
+         
+        return em.createQuery("SELECT a FROM Account a WHERE a.email = :email OR a.phone = :phone ")
+                .setParameter("email", a.getEmail())
+                .setParameter("phone", a.getPhone())
+                .getResultList().isEmpty();
     }
+
+//    /**
+//     *
+//     * @param begin the new account to be created no id needed.
+//     * @param password the new account ' s password
+//     * @return
+//     *
+//     */
+//    @Transactional
+//    public Signon signUp(Account begin, String password) {
+//        UUID uuid = Generators.timeBasedGenerator().generate();
+//        begin.setUserid(RandomStringUtils.random(3, true, true)+uuid.clockSequence());
+//        begin.setIban(begin.getUserid());
+//        Signon s= new Signon(begin.getUserid(), password);
+//
+//        signonFacade.create(s);
+//        this.create(begin);
+//        return s;
+//    }
 
     /**
      *
